@@ -4,80 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarrinhoDeCompras {
-  //atributos
-  private List<Item> itemList;
 
-  public CarrinhoDeCompras() {
-    this.itemList = new ArrayList<>();
-  }
+	public static void main(String[] args) {
+		CarrinhoDeCompras carrinhoCompras = new CarrinhoDeCompras();
 
-  public void adicionarItem(String nome, double preco, int quantidade) {
-    Item item = new Item(nome, preco, quantidade);
-    this.itemList.add(item);
-  }
+		System.out.println("O valor total eh: " + carrinhoCompras.calcularValorTotal());
 
-  public void removerItem(String nome) {
-    List<Item> itensParaRemover = new ArrayList<>();
-    if (!itemList.isEmpty()) {
-      for (Item i : itemList) {
-        if (i.getNome().equalsIgnoreCase(nome)) {
-          itensParaRemover.add(i);
-        }
-      }
-      itemList.removeAll(itensParaRemover);
-    } else {
-      System.out.println("A lista está vazia!");
-    }
-  }
+		carrinhoCompras.adicionarItem("Videogame", 199.90, 2);
+		System.out.println("O valor total eh: " + carrinhoCompras.calcularValorTotal());
 
-  public double calcularValorTotal() {
-    double valorTotal = 0d;
-    if (!itemList.isEmpty()) {
-      for (Item item : itemList) {
-        double valorItem = item.getPreco() * item.getQuant();
-        valorTotal += valorItem; //valorTotal = valorTotal + valorItem;
-      }
-      return valorTotal;
-    } else {
-      throw new RuntimeException("A lista está vazia!");
-    }
-  }
+		carrinhoCompras.removerItem("Videogame");
+		System.out.println("O valor total eh: " + carrinhoCompras.calcularValorTotal());
 
-  public void exibirItens() {
-    if (!itemList.isEmpty()) {
-      System.out.println(this.itemList);
-    } else {
-      System.out.println("A lista está vazia!");
-    }
-  }
+		carrinhoCompras.adicionarItem("Vacina", 199.90, 2);
+		carrinhoCompras.exibirItens();
 
-  @Override
-  public String toString() {
-    return "CarrinhoDeCompras{" +
-        "itens=" + itemList +
-        '}';
-  }
 
-  public static void main(String[] args) {
-    // Criando uma instância do carrinho de compras
-    CarrinhoDeCompras carrinhoDeCompras = new CarrinhoDeCompras();
+	}
 
-    // Adicionando itens ao carrinho
-    carrinhoDeCompras.adicionarItem("Lápis", 2d, 3);
-    carrinhoDeCompras.adicionarItem("Lápis", 2d, 3);
-    carrinhoDeCompras.adicionarItem("Caderno", 35d, 1);
-    carrinhoDeCompras.adicionarItem("Borracha", 2d, 2);
+	private List<Item> carrinhoList;
 
-    // Exibindo os itens no carrinho
-    carrinhoDeCompras.exibirItens();
+	public CarrinhoDeCompras() {
+		this.carrinhoList = new ArrayList<>();
+	}
 
-    // Removendo um item do carrinho
-    carrinhoDeCompras.removerItem("Lápis");
+	public void  adicionarItem(String nome, double preco, int quantidade) {
+		carrinhoList.add(new Item(nome, preco, quantidade));
+	}
 
-    // Exibindo os itens atualizados no carrinho
-    carrinhoDeCompras.exibirItens();
+	public void removerItem(String nome) {
+		List<Item> itemsParaRemover = new ArrayList<>();
+		for (Item i : carrinhoList) {
+			String name = i.getNome();
+			double price = i.getPreco();
+			int quant = i.getQuantidade();
+			if(name.equalsIgnoreCase(nome)) itemsParaRemover.add(i);
 
-    // Calculando e exibindo o valor total da compra
-    System.out.println("O valor total da compra é = " + carrinhoDeCompras.calcularValorTotal());
-  }
+		}
+		carrinhoList.removeAll(itemsParaRemover);
+	}
+
+	public double calcularValorTotal() {
+		double valorTotalCarrinho = 0;
+
+		for (Item i : carrinhoList) {
+			double price = i.getPreco();
+			int quant = i.getQuantidade();
+			double valorTotalItem = price * quant;
+			valorTotalCarrinho += valorTotalItem;
+		}
+		return valorTotalCarrinho;
+	}
+
+	public void exibirItens() {
+		System.out.println(carrinhoList);
+	}
 }
