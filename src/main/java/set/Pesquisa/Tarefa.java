@@ -1,36 +1,31 @@
 package main.java.set.Pesquisa;
 
 public class Tarefa {
-  //atributos
-  private String descricao;
-  private boolean concluida;
+	private String descricao;
+	private boolean concluido;
 
-  public Tarefa(String descricao) {
-    this.descricao = descricao;
-    this.concluida = false;
-  }
+	public Tarefa(String descricao, boolean concluido) {
+		this.descricao = descricao;
+		this.concluido = concluido;
+	}
 
-  public String getDescricao() {
-    return descricao;
-  }
+	public String getDescricao() {
+		return descricao;
+	}
 
-  public boolean isConcluida() {
-    return concluida;
-  }
+	public boolean isConcluido() {
+		return concluido;
+	}
 
-  public void setDescricao(String descricao) {
-    this.descricao = descricao;
-  }
+	public void setConcluido(boolean concluido) {
+		this.concluido = concluido;
+	}
 
-  public void setConcluida(boolean concluida) {
-    this.concluida = concluida;
-  }
-
-  @Override
-  public String toString() {
-    return "Tarefa{" +
-        "descricao='" + descricao + '\'' +
-        ", concluida=" + concluida +
-        '}';
-  }
+	@Override
+	public String toString() {
+		return "Tarefa{" +
+				"descricao='" + descricao + '\'' +
+				", concluido=" + concluido +
+				'}';
+	}
 }

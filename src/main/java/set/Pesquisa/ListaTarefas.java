@@ -4,139 +4,119 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ListaTarefas {
-  //atributos
-  private Set<Tarefa> tarefasSet;
+	private Set<Tarefa> tarefaSet;
 
-  public ListaTarefas() {
-    this.tarefasSet = new HashSet<>();
-  }
+	public ListaTarefas() {
+		this.tarefaSet = new HashSet<>();
+	}
 
-  public void adicionarTarefa(String descricao) {
-    tarefasSet.add(new Tarefa(descricao));
-  }
+	public void adicionarTarefa(String descricao) {
+		tarefaSet.add(new Tarefa(descricao, false));
+	}
 
-  public void removerTarefa(String descricao) {
-    Tarefa tarefaParaRemover = null;
-    if (!tarefasSet.isEmpty()) {
-      for (Tarefa t : tarefasSet) {
-        if (t.getDescricao().equalsIgnoreCase(descricao)) {
-          tarefaParaRemover = t;
-          break;
-        }
-      }
-      tarefasSet.remove(tarefaParaRemover);
-    } else {
-      System.out.println("O conjunto está vazio");
-    }
+	public void removerTarefa(String descricao) {
+		Tarefa tarefaParaRemover = null;
+		if(!tarefaSet.isEmpty()) {
+			for (Tarefa t : tarefaSet)
+				if (t.getDescricao().equalsIgnoreCase(descricao)) {
+					tarefaParaRemover = t;
+					break;
+				}
+			tarefaSet.remove(tarefaParaRemover);
+		} else System.out.println("Conjunto está vazio!");
+		if (tarefaParaRemover == null){
+			System.out.println("Tarefa n encontrada!");
+		}
+	}
 
-    if(tarefaParaRemover == null) {
-      System.out.println("Tarefa não encontrada!");
-    }
-  }
+	public void exibirTarefas() {
+		System.out.println(tarefaSet);
+	}
 
-  public void exibirTarefas() {
-    if(!tarefasSet.isEmpty()) {
-      System.out.println(tarefasSet);
-    } else {
-      System.out.println("Tarefa não encontrada!");
-    }
-  }
+	public int contarTarefas() {
+		return tarefaSet.size();
+	}
 
-  public int contarTarefas() {
-    return tarefasSet.size();
-  }
+	public Set<Tarefa> obterTarefasConcluidas() {
+		Set<Tarefa> tarefasConcluidas = new HashSet<>();
+		for (Tarefa t: tarefaSet)
+			if(t.isConcluido()) tarefasConcluidas.add(t);
+		return tarefasConcluidas;
+	}
 
-  public Set<Tarefa> obterTarefasConcluidas() {
-    Set<Tarefa> tarefasConcluidas = new HashSet<>();
-    for (Tarefa t : tarefasSet) {
-      if (t.isConcluida()) {
-        tarefasConcluidas.add(t);
-      }
-    }
-    return tarefasConcluidas;
-  }
+	public Set<Tarefa> obterTarefasPendentes() {
+		Set<Tarefa> tarefasPendentes = new HashSet<>();
+		for (Tarefa t: tarefaSet)
+			if(!t.isConcluido()) tarefasPendentes.add(t);
+		return tarefasPendentes;
+	}
 
-  public Set<Tarefa> obterTarefasPendentes() {
-    Set<Tarefa> tarefasNaoConcluidas = new HashSet<>();
-    for (Tarefa t : tarefasSet) {
-      if (!t.isConcluida()) {
-        tarefasNaoConcluidas.add(t);
-      }
-    }
-    return tarefasNaoConcluidas;
-  }
+	public Tarefa marcarTarefaConcluida(String descricao) {
+		Tarefa tarefaConcluida = null;
+		for (Tarefa t : tarefaSet) {
+			if (t.getDescricao().equalsIgnoreCase(descricao)) {
+				t.setConcluido(true);
+				tarefaConcluida = t;
+				break;
+			}
+		}
+		return tarefaConcluida;
+	}
 
-  public void marcarTarefaConcluida(String descricao) {
-    for (Tarefa t : tarefasSet) {
-      if (t.getDescricao().equalsIgnoreCase(descricao)) {
-        t.setConcluida(true);
-      }
-    }
-  }
+	public Tarefa marcarTarefaPendente(String descricao) {
+		Tarefa tarefaPendente = null;
+		for (Tarefa t : tarefaSet) {
+			if (t.getDescricao().equalsIgnoreCase(descricao)) {
+				t.setConcluido(false);
+				tarefaPendente = t;
+				break;
+			}
+		}
+		return tarefaPendente;
+	}
 
-  public void marcarTarefaPendente(String descricao) {
-    Tarefa tarefaParaMarcarComoPendente = null;
-    for (Tarefa t : tarefasSet) {
-      if (t.getDescricao().equalsIgnoreCase(descricao)) {
-        tarefaParaMarcarComoPendente = t;
-        break;
-      }
-    }
+	public void limparListaTarefas() {
+		if(tarefaSet.isEmpty()) System.out.println("Lista vazia");
+		else tarefaSet.clear();
+	}
 
-    if (tarefaParaMarcarComoPendente != null) {
-      if(tarefaParaMarcarComoPendente.isConcluida()) {
-        tarefaParaMarcarComoPendente.setConcluida(false);
-      }
-    } else {
-      System.out.println("Tarefa não encontrada na lista.");
-    }
-  }
+	public static void main(String[] args) {
+		// Criando uma instância da classe ListaTarefas
+		ListaTarefas listaTarefas = new ListaTarefas();
 
-  public void limparListaTarefas() {
-    if(tarefasSet.isEmpty()) {
-      System.out.println("A lista já está vazia!");
-    } else {
-      tarefasSet.clear();
-    }
-  }
+		// Adicionando tarefas à lista
+		listaTarefas.adicionarTarefa("Estudar Java");
+		listaTarefas.adicionarTarefa("Fazer exercícios físicos");
+		listaTarefas.adicionarTarefa("Organizar a mesa de trabalho");
+		listaTarefas.adicionarTarefa("Ler livro");
+		listaTarefas.adicionarTarefa("Preparar apresentação");
 
-  public static void main(String[] args) {
-    // Criando uma instância da classe ListaTarefas
-    ListaTarefas listaTarefas = new ListaTarefas();
+		// Exibindo as tarefas na lista
+		listaTarefas.exibirTarefas();
 
-    // Adicionando tarefas à lista
-    listaTarefas.adicionarTarefa("Estudar Java");
-    listaTarefas.adicionarTarefa("Fazer exercícios físicos");
-    listaTarefas.adicionarTarefa("Organizar a mesa de trabalho");
-    listaTarefas.adicionarTarefa("Ler livro");
-    listaTarefas.adicionarTarefa("Preparar apresentação");
+		// Removendo uma tarefa
+		listaTarefas.removerTarefa("Fazer exercícios físicos");
+		listaTarefas.exibirTarefas();
 
-    // Exibindo as tarefas na lista
-    listaTarefas.exibirTarefas();
+		// Contando o número de tarefas na lista
+		System.out.println("Total de tarefas na lista: " + listaTarefas.contarTarefas());
 
-    // Removendo uma tarefa
-    listaTarefas.removerTarefa("Fazer exercícios físicos");
-    listaTarefas.exibirTarefas();
+		// Obtendo tarefas pendentes
+		System.out.println(listaTarefas.obterTarefasPendentes());
 
-    // Contando o número de tarefas na lista
-    System.out.println("Total de tarefas na lista: " + listaTarefas.contarTarefas());
+		// Marcando tarefas como concluídas
+		listaTarefas.marcarTarefaConcluida("Ler livro");
+		listaTarefas.marcarTarefaConcluida("Estudar Java");
 
-    // Obtendo tarefas pendentes
-    System.out.println(listaTarefas.obterTarefasPendentes());
+		// Obtendo tarefas concluídas
+		System.out.println(listaTarefas.obterTarefasConcluidas());
 
-    // Marcando tarefas como concluídas
-    listaTarefas.marcarTarefaConcluida("Ler livro");
-    listaTarefas.marcarTarefaConcluida("Estudar Java");
+		// Marcando tarefas como pendentes
+		listaTarefas.marcarTarefaPendente("Estudar Java");
+		listaTarefas.exibirTarefas();
 
-    // Obtendo tarefas concluídas
-    System.out.println(listaTarefas.obterTarefasConcluidas());
-
-    // Marcando tarefas como pendentes
-    listaTarefas.marcarTarefaPendente("Estudar Java");
-    listaTarefas.exibirTarefas();
-
-    // Limpando a lista de tarefas
-    listaTarefas.limparListaTarefas();
-    listaTarefas.exibirTarefas();
-  }
+		// Limpando a lista de tarefas
+		listaTarefas.limparListaTarefas();
+		listaTarefas.exibirTarefas();
+	}
 }
