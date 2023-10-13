@@ -5,53 +5,47 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class CadastroProdutos {
-  //atributo
-  private Set<Produto> produtoSet;
 
-  public CadastroProdutos() {
-    this.produtoSet = new HashSet<>();
-  }
+	private Set<Produto> produtoSet;
 
-  public void adicionarProduto(long cod, String nome, double preco, int quantidade) {
-    produtoSet.add(new Produto(cod, nome, preco, quantidade));
-  }
+	public CadastroProdutos() {
+		this.produtoSet = new HashSet<>();
+	}
 
-  public Set<Produto> exibirProdutosPorNome() {
-    Set<Produto> produtosPorNome = new TreeSet<>(produtoSet);
-    if (!produtoSet.isEmpty()) {
-      return produtosPorNome;
-    } else {
-      throw new RuntimeException("O conjunto está vazio!");
-    }
-  }
+	public void adicionarProduto(long cod, String nome, double preco, int quantidade) {
+		produtoSet.add(new Produto(nome, cod, preco, quantidade));
+	}
 
-  public Set<Produto> exibirProdutosPorPreco() {
-    Set<Produto> produtosPorPreco = new TreeSet<>(new ComparatorPorPreco());
-    if (!produtoSet.isEmpty()) {
-      produtosPorPreco.addAll(produtoSet);
-      return produtosPorPreco;
-    } else {
-      throw new RuntimeException("O conjunto está vazio!");
-    }
-  }
+	public Set<Produto> exibirProdutosPorNome() {
+		// organiza o conjunto pela ordem natural determinada na classe (comparable)
+		// utilizando o TreeSet<>();
+		Set<Produto> produtosPorNome = new TreeSet<>(produtoSet);
+		return produtosPorNome;
+	}
 
-  public static void main(String[] args) {
-    // Criando uma instância do CadastroProdutos
-    CadastroProdutos cadastroProdutos = new CadastroProdutos();
+	public Set<Produto> exibirProdutosPorPreco(){
+		Set<Produto> produtosPorPreco = new TreeSet<>(new ComparatorPorPreco());
+		produtosPorPreco.addAll(produtoSet);
+		return produtosPorPreco;
+	}
 
-    // Adicionando produtos ao cadastro
-    cadastroProdutos.adicionarProduto(1L, "Smartphone", 1000d, 10);
-    cadastroProdutos.adicionarProduto(2L, "Notebook", 1500d, 5);
-    cadastroProdutos.adicionarProduto(1L, "Mouse", 30d, 20);
-    cadastroProdutos.adicionarProduto(4L, "Teclado", 50d, 15);
+	public static void main(String[] args) {
+		// Criando uma instância do CadastroProdutos
+		CadastroProdutos cadastroProdutos = new CadastroProdutos();
 
-    // Exibindo todos os produtos no cadastro
-    System.out.println(cadastroProdutos.produtoSet);
+		// Adicionando produtos ao cadastro
+		cadastroProdutos.adicionarProduto(1L, "Produto 5", 1000d, 10);
+		cadastroProdutos.adicionarProduto(2L, "Produto 0", 1500d, 5);
+		cadastroProdutos.adicionarProduto(1L, "Produto 3", 30d, 20);
+		cadastroProdutos.adicionarProduto(4L, "Produto 9", 50d, 15);
 
-    // Exibindo produtos ordenados por nome
-    System.out.println(cadastroProdutos.exibirProdutosPorNome());
+		// Exibindo todos os produtos no cadastro
+		System.out.println(cadastroProdutos.produtoSet);
 
-    // Exibindo produtos ordenados por preço
-    System.out.println(cadastroProdutos.exibirProdutosPorPreco());
-  }
+		// Exibindo produtos ordenados por nome
+		System.out.println(cadastroProdutos.exibirProdutosPorNome());
+
+		// Exibindo produtos ordenados por preço
+		System.out.println(cadastroProdutos.exibirProdutosPorPreco());
+	}
 }
